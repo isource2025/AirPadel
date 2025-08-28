@@ -7,7 +7,7 @@ export default function Services() {
       icon: '🏓',
       title: 'Alquiler de Canchas',
       description: 'Canchas de pádel premium con césped sintético de última generación y excelente iluminación.',
-      price: 'Desde $2.500/hora',
+      price: 'Cancha 1:30 $44.000',
       features: ['Césped sintético premium', 'Iluminación LED', 'Vestuarios incluidos']
     },
     {
@@ -30,6 +30,13 @@ export default function Services() {
       description: 'Participa en nuestros torneos mensuales y compite con jugadores de tu nivel.',
       price: 'Desde $1.000/inscripción',
       features: ['Diferentes categorías', 'Premios incluidos', 'Ambiente competitivo']
+    },
+    {
+      icon: '🌤️',
+      title: 'Cancha Abierta',
+      description: 'Juga al aire libre en cancha abierta.',
+      price: 'Cancha abierta $15.000',
+      features: ['Ambiente abierto', 'Espacio ventilado', 'Ideal para días templados']
     }
   ]
 
@@ -60,9 +67,15 @@ export default function Services() {
                 ))}
               </div>
               <div className={styles.servicePrice}>{service.price}</div>
-              <button className={styles.serviceBtn}>
-                Reservar Ahora
-              </button>
+              <a
+                className={styles.serviceBtn}
+                href={`https://wa.me/5491122600030?text=${encodeURIComponent(`Hola! Quiero reservar: ${service.title} (${service.price}). ¿Me pasás más info y disponibilidad?`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Reservar ${service.title} por WhatsApp`}
+              >
+                Reservar por WhatsApp
+              </a>
             </div>
           ))}
         </div>

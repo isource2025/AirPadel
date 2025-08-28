@@ -35,7 +35,7 @@ export default function Hero({ onLoginSuccess }: HeroProps) {
         </div>
         <div className={styles.heroImage}>
           <img 
-            src="https://i.pinimg.com/1200x/6c/da/45/6cda45347b2fbdc389a769ce8fad5ad7.jpg" 
+            src="/FotoTorneo.jpeg" 
             alt="Cancha de pádel profesional" 
             className={styles.heroImg}
           />

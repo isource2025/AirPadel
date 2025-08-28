@@ -7,6 +7,7 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import Turnos from '../../components/Turnos/Turnos'
 import Events from '../../components/Eventos/Events'
 import spaStyles from '../spa.module.css'
+import WhatsAppButton from '../../components/Shared/WhatsAppButton'
 
 export default function AppPage() {
   const router = useRouter()
@@ -52,6 +53,7 @@ export default function AppPage() {
         </section>
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   )
 }

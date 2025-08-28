@@ -27,14 +27,14 @@ export default function LoginModal({ onClose, onLoginSuccess }: LoginModalProps)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (isLogin) {
-      // Hardcoded credentials: Usuario / Usuario
-      if (formData.email === 'Usuario' && formData.password === 'Usuario') {
+      // Hardcoded credentials: Aldana / 123
+      if (formData.email === 'Aldana' && formData.password === '123') {
         setError('')
         onLoginSuccess && onLoginSuccess(formData.email)
         onClose()
         return
       } else {
-        setError('Credenciales inválidas. Usa Usuario / Usuario')
+        setError('Credenciales inválidas. Usa Aldana / 123')
         return
       }
     }
@@ -92,7 +92,7 @@ export default function LoginModal({ onClose, onLoginSuccess }: LoginModalProps)
           <input
             type="text"
             name="email"
-            placeholder={isLogin ? 'Usuario' : 'Email'}
+            placeholder={isLogin ? 'Usuario (Aldana)' : 'Email'}
             value={formData.email}
             onChange={handleChange}
             required

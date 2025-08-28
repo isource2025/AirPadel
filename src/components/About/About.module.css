@@ -10,6 +10,55 @@
   align-items: center;
 }
 
+/* Timeline wrapper under the two columns */
+.timeline {
+  margin-top: 2rem;
+}
+
+/* Horizontal timeline (desktop by default) */
+.timelineTrack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem 0.5rem 0.5rem;
+}
+.timelineTrack::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  top: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(0,255,136,0.35), rgba(0,255,136,0.15));
+}
+
+.timelineItem {
+  position: relative;
+  min-width: 140px;
+  text-align: left;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 0 4px rgba(0,255,136,0.18);
+  position: relative;
+  z-index: 1;
+  margin-left: -6px; /* center over line */
+}
+.timeTitle {
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: var(--primary-black);
+}
+.timeDesc {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+}
+
 .title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -76,8 +125,8 @@
 }
 
 .imagePlaceholder {
-  width: 400px;
-  height: 300px;
+  width: min(560px, 100%);
+  aspect-ratio: 4 / 3;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -90,6 +139,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   border-radius: 20px;
 }
 
@@ -109,7 +159,16 @@
 
   .imagePlaceholder {
     width: 350px;
-    height: 260px;
+    height: 260px; /* override aspect for tablets to keep current layout */
+    aspect-ratio: auto;
+  }
+}
+
+/* Desktop large */
+@media (min-width: 1200px) {
+  .imagePlaceholder {
+    width: min(680px, 100%);
+    aspect-ratio: 16 / 10;
   }
 }
 
@@ -154,6 +213,24 @@
     width: 280px;
     height: 200px;
   }
+
+  /* Vertical timeline for mobile */
+  .timelineTrack {
+    display: grid;
+    gap: 1rem;
+    padding-left: 1.25rem;
+  }
+  .timelineTrack::before {
+    left: 0.6rem;
+    right: auto;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(0,255,136,0.35), rgba(0,255,136,0.15));
+  }
+  .timelineItem { min-width: 0; }
+  .dot { margin-left: -1.25rem; }
 }
 
 /* Large Mobile Styles */
