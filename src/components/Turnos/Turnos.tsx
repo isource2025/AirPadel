@@ -1,6 +1,7 @@
 "use client"
 import React, { useMemo, useRef, useState } from 'react'
 import styles from "./Turnos.module.css"
+import CustomSelect from "../Shared/CustomSelect"
 
 function formatDay(d: Date) {
   return d.toLocaleDateString(undefined, { weekday: 'short' })
@@ -16,6 +17,7 @@ export default function Turnos() {
   const [branch, setBranch] = useState<string>("Jose Leon Suarez")
   const [court, setCourt] = useState<string>("Cancha 1")
   const [selection, setSelection] = useState<{ dayIdx: number; startIdx: number } | null>(null)
+  const [modalEndIdx, setModalEndIdx] = useState<number | null>(null)
   const [notice, setNotice] = useState<string>("")
   const [openModal, setOpenModal] = useState<boolean>(false)
   const daysColsRef = useRef<HTMLDivElement | null>(null)
@@ -39,13 +41,15 @@ export default function Turnos() {
   }, [])
 
   const slots = useMemo(() => {
-    // 8:00 to 12:00 inclusive, steps of 30 minutes
+    // Hourly slots: 08:00 to 00:00 (end-only). Last entry is end boundary.
     const out: string[] = []
-    for (let h = 8; h <= 11; h++) {
-      out.push(`${h}:00`)
-      out.push(`${h}:30`)
+    const startHour = 8
+    const endHour = 24
+    for (let h = startHour; h < endHour; h++) {
+      const hh = String(h).padStart(2, '0')
+      out.push(`${hh}:00`)
     }
-    out.push('12:00')
+    out.push('00:00')
     return out
   }, [])
 
@@ -54,31 +58,32 @@ export default function Turnos() {
       <div className={styles.controls}>
         <div className={styles.controlGroup}>
           <label className={styles.controlLabel}>Sucursal</label>
-          <select
-            className={styles.select}
+          <CustomSelect
             value={branch}
-            onChange={(e) => setBranch(e.target.value)}
-          >
-            <option>Jose Leon Suarez</option>
-            <option>Ballester</option>
-          </select>
+            onChange={(v) => setBranch(v)}
+            options={["Jose Leon Suarez", "Ballester"]}
+            ariaLabel="Sucursal"
+          />
         </div>
         <div className={styles.controlGroup}>
           <label className={styles.controlLabel}>Cancha</label>
-          <select
-            className={styles.select}
+          <CustomSelect
             value={court}
-            onChange={(e) => setCourt(e.target.value)}
-          >
-            <option>Cancha 1</option>
-            <option>Cancha 2</option>
-            <option>Cancha 3</option>
-          </select>
+            onChange={(v) => setCourt(v)}
+            options={["Cancha 1", "Cancha 2", "Cancha 3"]}
+            ariaLabel="Cancha"
+          />
+        </div>
+        <div className={styles.navControls}>
+          <button className={styles.navBtnInline} aria-label="Anterior" onClick={() => scrollByDays(-1)}>
+            ‹ <span>Anterior</span>
+          </button>
+          <button className={styles.navBtnInline} aria-label="Siguiente" onClick={() => scrollByDays(1)}>
+            <span>Siguiente</span> ›
+          </button>
         </div>
       </div>
       <div className={styles.carousel}>
-        <button className={`${styles.navBtn} ${styles.navLeft}`} aria-label="Anterior" onClick={() => scrollByDays(-1)}>‹</button>
-        <button className={`${styles.navBtn} ${styles.navRight}`} aria-label="Siguiente" onClick={() => scrollByDays(1)}>›</button>
         <div className={styles.daysCols} ref={daysColsRef}>
           {days.map((d, dayIdx) => (
             <div key={dayIdx} className={styles.dayCol}>
@@ -89,17 +94,16 @@ export default function Turnos() {
               {slots.map((t, i) => (
                 <button
                   key={i}
-                  className={`${styles.slot} ${selection && selection.dayIdx === dayIdx && (i === selection.startIdx || i === selection.startIdx + 1) ? styles.selected : ''}`}
+                  className={`${styles.slot} ${selection && selection.dayIdx === dayIdx && i === selection.startIdx ? styles.selected : ''}`}
                   title={`Reservar ${formatDM(d)} ${t}`}
                   onClick={() => {
                     if (i >= slots.length - 1) {
-                      setNotice('La reserva mínima es de 1 hora. Elegí un horario que tenga el siguiente bloque disponible.')
+                      setNotice('Elegí una hora de inicio válida (no al final del día).')
                       return
                     }
                     setSelection({ dayIdx, startIdx: i })
-                    const start = t
-                    const end = slots[i + 1]
-                    setNotice(`Reserva seleccionada: ${formatDM(d)} ${start} - ${end} · ${branch} · ${court}`)
+                    setModalEndIdx(null) // reset end until modal
+                    setNotice(`Inicio seleccionado: ${formatDM(d)} ${t} · ${branch} · ${court}`)
                   }}
                 >
                   {t}
@@ -121,15 +125,35 @@ export default function Turnos() {
       </div>
       {openModal && selection && (
         <div className={styles.modalOverlay} onClick={() => setOpenModal(false)}>
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={`${styles.modal} ${branch === 'Jose Leon Suarez' ? styles.themeBlue : styles.themeGreen}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <h3 className={styles.modalTitle}>Confirmar reserva</h3>
             <div className={styles.modalBody}>
               <p><strong>Sucursal:</strong> {branch}</p>
               <p><strong>Cancha:</strong> {court}</p>
               <p>
-                <strong>Horario:</strong> {formatDM(days[selection.dayIdx])}{' '}
-                {slots[selection.startIdx]} - {slots[selection.startIdx + 1]}
+                <strong>Inicio:</strong> {formatDM(days[selection.dayIdx])}{' '}
+                {slots[selection.startIdx]}
               </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '.5rem', marginTop: '.25rem' }}>
+                <label style={{ fontWeight: 600 }}>Hasta:</label>
+                <CustomSelect
+                  value={modalEndIdx != null ? slots[modalEndIdx] : ''}
+                  onChange={(val) => {
+                    const idx = slots.findIndex(s => s === val)
+                    setModalEndIdx(idx >= 0 ? idx : null)
+                  }}
+                  options={(() => {
+                    const start = selection.startIdx
+                    // End options: strictly after start
+                    return slots.slice(start + 1).map(v => ({ label: v, value: v }))
+                  })()}
+                  ariaLabel="Hora de fin"
+                  placeholder="Seleccionar fin"
+                />
+              </div>
             </div>
             <div className={styles.modalActions}>
               <button className={styles.secondaryBtn} onClick={() => setOpenModal(false)}>Cancelar</button>
@@ -138,7 +162,10 @@ export default function Turnos() {
                 onClick={() => {
                   const d = days[selection.dayIdx]
                   const start = slots[selection.startIdx]
-                  const end = slots[selection.startIdx + 1]
+                  // If no end picked yet, default to +1 hour
+                  const fallbackEndIdx = Math.min(selection.startIdx + 1, slots.length - 1)
+                  const endIdx = modalEndIdx != null && modalEndIdx > selection.startIdx ? modalEndIdx : fallbackEndIdx
+                  const end = slots[endIdx]
                   setNotice(`Reserva confirmada: ${formatDM(d)} ${start} - ${end} · ${branch} · ${court}`)
                   setOpenModal(false)
                 }}

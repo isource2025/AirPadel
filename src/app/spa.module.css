@@ -1,4 +1,3 @@
-
 .spaMain {
   display: flex;
   min-height: 70vh;
@@ -15,7 +14,9 @@
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+  box-shadow: 0 8px 24px rgba(92, 5, 5, 0.04);
+  /* Keep the calendar within the viewport and allow scrolling inside */
+  overflow: auto;
 }
 
 .spaHeader {
@@ -51,7 +52,10 @@
 
 @media (max-width: 900px) {
   .spaMain { padding: 0.5rem; gap: 0.5rem; }
-  .content { padding: 0.75rem; }
+  .content {
+    /* Recompute available height with reduced padding (1rem total vertical) */
+    max-height: calc(100vh - 72px - 1rem);
+  }
 }
 
 @media (max-width: 700px) {
