@@ -1,0 +1,113 @@
+.sidebar {
+  width: 240px;
+  padding: 1rem;
+  position: sticky;
+  top: 64px; /* approx navbar height */
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--primary-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-black);
+  font-weight: 700;
+}
+
+.userInfo { line-height: 1.1; }
+.userName { font-weight: 700; }
+.userRole { color: #6b7280; font-size: 0.85rem; }
+
+.title {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  text-align: left;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.08s ease;
+}
+
+.item:hover {
+  background: #f3f4f6;
+}
+
+.active {
+  background: var(--primary-green);
+  color: var(--primary-black);
+  border-color: var(--dark-green);
+}
+
+.footerArea {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.logoutBtn {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  padding: 0.6rem 0.9rem;
+  cursor: pointer;
+}
+.logoutBtn:hover { opacity: 0.92; }
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 200px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 280px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    position: static; /* disable sticky on mobile */
+    top: auto;
+  }
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .item { text-align: center; }
+  .footerArea { margin-top: 0.75rem; }
+}

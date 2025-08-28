@@ -1,0 +1,333 @@
+.locations {
+  padding: 6rem 0;
+  background: var(--light-gray);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-black);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-gray);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.locationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.locationCard {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.locationCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.locationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.locationName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-black);
+}
+
+.courtsInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--primary-green);
+  color: var(--primary-black);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.courtsIcon {
+  font-size: 1rem;
+}
+
+.locationInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.infoIcon {
+  font-size: 1.2rem;
+  background: var(--light-gray);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.infoText strong {
+  display: block;
+  font-weight: 600;
+  color: var(--primary-black);
+  margin-bottom: 0.3rem;
+}
+
+.infoText p {
+  color: var(--text-gray);
+  margin: 0;
+}
+
+.mapContainer {
+  margin-bottom: 2rem;
+}
+
+.mapPlaceholder {
+  background: var(--light-gray);
+  border-radius: 15px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  border: 2px dashed #ddd;
+}
+
+.mapIcon {
+  font-size: 3rem;
+}
+
+.mapPlaceholder p {
+  color: var(--text-gray);
+  font-weight: 500;
+}
+
+.locationActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.mapBtn {
+  background: transparent;
+  color: var(--primary-green);
+  border: 2px solid var(--primary-green);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  flex: 1;
+  min-width: 150px;
+}
+
+.mapBtn:hover {
+  background: var(--primary-green);
+  color: var(--primary-black);
+}
+
+.reserveBtn {
+  background: var(--primary-green);
+  color: var(--primary-black);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  flex: 1;
+  min-width: 150px;
+}
+
+.reserveBtn:hover {
+  background: var(--dark-green);
+  transform: translateY(-1px);
+}
+
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .locationsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .title {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .locationCard {
+    padding: 2rem;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .locations {
+    padding: 4rem 0;
+  }
+
+  .locationsGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .locationCard {
+    margin: 0 1rem;
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .locationHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .locationName {
+    font-size: 1.3rem;
+  }
+
+  .courtsInfo {
+    align-self: flex-start;
+  }
+
+  .locationActions {
+    flex-direction: column;
+  }
+
+  .mapBtn,
+  .reserveBtn {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+/* Large Mobile Styles */
+@media (max-width: 480px) {
+  .locations {
+    padding: 3rem 0;
+  }
+
+  .locationCard {
+    margin: 0 0.5rem;
+    padding: 1.2rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .locationName {
+    font-size: 1.2rem;
+  }
+
+  .infoItem {
+    gap: 0.8rem;
+  }
+
+  .infoIcon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .infoText strong {
+    font-size: 0.95rem;
+  }
+
+  .infoText p {
+    font-size: 0.9rem;
+  }
+
+  .mapPlaceholder {
+    height: 150px;
+  }
+
+  .mapIcon {
+    font-size: 2.5rem;
+  }
+
+  .mapPlaceholder p {
+    font-size: 0.9rem;
+  }
+
+  .mapBtn,
+  .reserveBtn {
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+  .locationCard {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .locationName {
+    font-size: 1.1rem;
+  }
+
+  .courtsInfo {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .mapPlaceholder {
+    height: 120px;
+  }
+
+  .mapIcon {
+    font-size: 2rem;
+  }
+}

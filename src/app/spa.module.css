@@ -1,0 +1,80 @@
+
+.spaMain {
+  display: flex;
+  min-height: 70vh;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #f8fafc;
+  /* Push below fixed navbar */
+  margin-top: 72px; /* adjust if navbar height changes */
+}
+
+.content {
+  flex: 1;
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+}
+
+.spaHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.spaTitle {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.spaSubtitle {
+  color: #6b7280;
+}
+
+.spaActions { display: flex; gap: 0.5rem; }
+
+.actionBtn {
+  background: #111827;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.actionBtn:hover { opacity: 0.9; }
+
+@media (max-width: 900px) {
+  .spaMain { padding: 0.5rem; gap: 0.5rem; }
+  .content { padding: 0.75rem; }
+}
+
+@media (max-width: 700px) {
+  .spaMain {
+    flex-direction: column;
+  }
+  .spaHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .spaTitle { font-size: 1.2rem; }
+}
+
+/* Desktop widescreen layout */
+@media (min-width: 1200px) {
+  .spaMain {
+    max-width: 1280px;
+    margin-inline: auto;
+    gap: 1.25rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .content {
+    padding: 1.25rem 1.25rem;
+  }
+}
